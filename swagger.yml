@@ -1,9 +1,8 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: Swaggerサンプル
   version: '1.0'
   description: SwaggerサンプルのためのAPI定義です。ここから「ドキュメント」「コード生成」を行います。
-  summary: SwaggerサンプルのためのAPI実装
   contact:
     name: uchiko
     email: memememomo@gmail.com
@@ -21,7 +20,7 @@ paths:
         - user
       responses:
         '200':
-          description: User Found
+          description: UserFound
           content:
             application/json:
               schema:
