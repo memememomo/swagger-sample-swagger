@@ -1,0 +1,212 @@
+openapi: 3.1.0
+info:
+  title: Swaggerサンプル
+  version: '1.0'
+  description: SwaggerサンプルのためのAPI定義です。ここから「ドキュメント」「コード生成」を行います。
+  summary: SwaggerサンプルのためのAPI実装
+  contact:
+    name: uchiko
+    email: memememomo@gmail.com
+tags:
+  - name: user
+  - name: micropost
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /v1/users:
+    parameters: []
+    get:
+      summary: ユーザー
+      tags:
+        - user
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples: {}
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '404':
+          description: User Not Found
+      operationId: get-users-userId
+      description: ユーザー一覧を返す
+    post:
+      summary: ''
+      operationId: post-v1-users
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+            examples:
+              example-1:
+                value:
+                  name: string
+                  email: string
+        description: ''
+      description: ユーザーを新規登録する
+      tags:
+        - user
+  '/v1/users/{userId}':
+    parameters:
+      - schema:
+          type: number
+        name: userId
+        in: path
+        required: true
+    get:
+      summary: ID指定
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      tags:
+        - user
+      description: ユーザーを取得
+      operationId: get-v1-user
+    delete:
+      summary: ''
+      operationId: delete-users-userId
+      responses:
+        '200':
+          description: OK
+      description: ユーザーを削除
+      tags:
+        - user
+    put:
+      summary: ''
+      operationId: put-users-userId
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      description: ユーザーを更新
+      tags:
+        - user
+  '/v1/users/{userId}/microposts':
+    get:
+      summary: Your GET endpoint
+      tags:
+        - micropost
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ''
+      operationId: get-v1-microposts
+      description: マイクロポストの一覧を取得
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+  '/v1/microposts/{micropostId}':
+    parameters:
+      - schema:
+          type: integer
+        name: micropostId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags:
+        - micropost
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Micropost'
+      operationId: get-v1-microposts-micropostId
+      description: マイクロポストを取得
+    put:
+      summary: ''
+      operationId: put-v1-microposts-micropostId
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicropostCraete'
+      tags:
+        - micropost
+      description: マイクロポストを更新
+    delete:
+      summary: ''
+      operationId: delete-v1-microposts-micropostId
+      responses:
+        '200':
+          description: OK
+      tags:
+        - micropost
+      description: マイクロソフトを削除
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: ユーザー
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+      required:
+        - id
+        - email
+        - name
+      x-examples: {}
+    Micropost:
+      title: Micropost
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+    UserCreate:
+      title: UserCreate
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+    MicropostCraete:
+      title: MicropostCreate
+      type: object
+      description: ''
+      properties:
+        content:
+          type: string
+  securitySchemes: {}
+  responses: {}
